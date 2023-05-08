@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
 
+from features_extraction import extractFeature
+
 app = Flask(__name__)
 
 
@@ -11,9 +13,6 @@ def index():
 @app.route('/check', methods=['POST'])
 def check():
     if request.method == 'POST':
-        # if 'url' not in request.form or 'html' not in request.form:
-        #     return jsonify({'error': 'Missing form data'}), 400
-
         data = request.get_json()
         url = data['url']
         html = data['html']
@@ -21,7 +20,8 @@ def check():
         if url is None or html is None:
             return jsonify({'error': 'Missing url or html parameter'}), 400
 
-        # TODO: extract the features
+        features = extractFeature(url, html)
+
         # TODO: get result from ai model
         print(html, url)
 
