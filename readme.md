@@ -3,6 +3,9 @@
 ### Flask Backend
 
 1. Clone The Repo
+```
+   git clone https://github.com/bibekthapa007/phishing_defense.git
+```
 2. Fire Up Terminal and Hit
 
    ```
