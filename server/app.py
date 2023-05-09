@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 
+from predict import predict
 from features_extraction import extractFeature
 
 app = Flask(__name__)
@@ -22,10 +23,11 @@ def check():
 
         features = extractFeature(url, html)
 
-        # TODO: get result from ai model
-        print(html, url)
+        # isSafe = predict(url)
 
-        return jsonify({"url": url, "check": "true"}), 200
+        print(url, html)
+
+        return jsonify({"url": url, "isSafe": "true"}), 200
     else:
         return jsonify({'error': 'Invalid request method'}), 400
 
