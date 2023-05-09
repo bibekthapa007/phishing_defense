@@ -1,1 +1,5 @@
 flask
+numpy
+joblib
+python-whois
+beautifulsoup4
