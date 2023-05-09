@@ -1,19 +1,22 @@
-### Phishing Defense
+## Phishing Defense
 
-#### Flask
+### Flask Backend
 
-```
-cd ./server
-```
+1. Clone The Repo
+2. Fire Up Terminal and Hit
 
-```
-pip install -r requirements.txt
-```
+   ```
+   cd ./server
+   pip install -r requirements.txt 
+   flask run --debug
+   ```
 
-```
-flask run
-```
+### Extension
 
-```
-flask run --debug
-```
+1. Go to chrome Settings using three dots on the top right corner
+
+2. Select Extensions.
+3. Enable developer mode
+4. Click on Load Unpacked and select the extensions folder.
+</br>
+
