@@ -11,7 +11,7 @@ data = []
 
 load_dotenv()
 MODEL_PATH = os.getenv("MODEL_PATH")
-with open('../../../../finalyearproject/dataset.csv') as fh:
+with open('dataset.csv') as fh:
     for i, line in enumerate(fh):
         if i == 0:
             continue
