@@ -28,7 +28,12 @@ def check():
 
         print("Checking url:", url)
 
-        isSafe = predict(url, html)
+        isSafe = 1
+        try:
+            isSafe = predict(url, html)
+        except Exception as e:
+            print(e)
+            return jsonify({"url": url, "isError": 1, "error": type(e).__name__}), 200
 
         print("isSafe", isSafe)
 
@@ -43,6 +48,17 @@ if __name__ == '__main__':
 # Test link that works
 # http://127.0.0.1:5000/-/@/r/r/r/?a=b--b-//ramshyamharitigerinepalnepalnepalnepalnepal
 # https://steep-fairies-phishing-https-http-test-test-test.surge.sh/
+
+# From the phishing task data that are categorized as phishing.
+# https://rewardarium.com/?z=5904237&p=5904254&ipp=5904249&var=zd_5944655&ar=1&ymid=680876102878769605&source=18885836&ret={var_4}
+# https://melbet-np.com/en?tag=d_2009167m_59741c_%5B%5DMS%5B%5Dnull%5B%5Dnull%5B%5Dgeneral%5B%5D1506747-3039366168-0_d87056_l91182_clickunder
+# https://secur.52-31-115-142.cprapid.com/login.html
+# https://onlineatacadaocupom.com/loginjsf.php?27309=2612b016dfcee6730a3106c47f61e68b&amp;amp;27309
+# https://atacadaoresgateagoracred.com/loginjsf.php?18390=f9c2241916e0819565191ba8c95c96ac&amp
+# http://bit.ly/areaCliente24
+# https://dofus-mmorpg.fr/fr/mmorpg/actualites/news/cave-leviathan/
+# https://lwa.uloadeeksurvey.space/finance-survey.html?utm_content=zd_public_v2
+# https://www.bitmart.com/en-US?jumpcodebm=1
 
 # Test Link not working
 # https://confirm.95urbehxy2dh.top/eb430691fe30d16070b5a144c3d3303c/4e732ced3463d06de0ca9a15b6153677/
