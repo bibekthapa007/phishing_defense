@@ -9,20 +9,25 @@ function transfer() {
     $("#site").text(tablink);
 
     var xhr = new XMLHttpRequest();
-    params = "url=" + original_url;
-    var markup =
-      "url=" + original_url + "&html=" + document.documentElement.innerHTML;
-    xhr.open("POST", "http://localhost:8000", true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.onload = () => {
-      if (xhr.responseText === "SAFE") {
-        $("#div1").text(xhr.responseText);
-      } else {
-        $("#div2").text(xhr.responseText);
-      }
-      return xhr.responseText;
+    var data = {
+      url: original_url,
+      html: document.documentElement.innerHTML,
     };
-    xhr.send(markup);
+    xhr.open("POST", "http://localhost:5000/check", true);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        if (response.isSafe === 1) {
+          $("#div1").text("SAFE");
+        } else {
+          $("#div2").text("UNSAFE");
+        }
+      } else {
+        $("#div3").text("ERROR");
+      }
+    };
+    xhr.send(JSON.stringify(data));
   });
 }
 

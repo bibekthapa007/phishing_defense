@@ -146,14 +146,14 @@ def request_url(wiki, soup, domain):
     try:
         percentage = success / float(i) * 100
     except:
-        return 1
+        return -1
 
     if percentage < 22.0:
-        return 1
+        return -1
     elif 22.0 <= percentage < 61.0:
         return 0
     else:
-        return -1
+        return 1
 
 
 def url_of_anchor(wiki, soup, domain):
@@ -199,14 +199,14 @@ def links_in_tags(wiki, soup, domain):
     try:
         percentage = success / float(i) * 100
     except:
-        return 1
+        return -1
 
     if percentage < 17.0:
-        return 1
+        return -1
     elif 17.0 <= percentage < 81.0:
         return 0
     else:
-        return -1
+        return 1
 
 
 # Server Form Handler (SFH)
