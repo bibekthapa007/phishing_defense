@@ -8,6 +8,18 @@ body {
   color: black;
 }
 
+.center {
+  text-align: center;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: #0c5;
+}
+
 .container {
   font-size: 15px;
 }
@@ -18,6 +30,7 @@ body {
   justify-content: space-between;
   align-items: center;
   font-size: 30px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .info {
@@ -35,7 +48,7 @@ body {
 
 #site {
   font-size: 15px;
-  color: aqua;
+  color: #0c5;
 }
 
 .check {
