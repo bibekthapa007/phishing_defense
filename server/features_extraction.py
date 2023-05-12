@@ -1,10 +1,13 @@
 import re
 import time
 import bs4
+import whois
 import urllib
+import socket
 import ipaddress
 from datetime import datetime
 from bs4 import BeautifulSoup
+from googlesearch import search
 from urllib.request import Request, urlopen
 import whois
 
@@ -60,9 +63,13 @@ def prefix_suffix(domain):
 
 
 def having_sub_domain(url):
-    # Here, instead of greater than 1 we will take greater than 3 since the greater than 1 condition is when www and
-    # country domain dots are skipped
-    # Accordingly other dots will increase by 1
+    """Checks whether a given URL has an IP address in it or not. 
+    If the URL has an IP address, the function removes the IP address portion from the URL. 
+    Then, it counts the number of dots in the remaining URL. If the number of dots is less than or equal to 3,
+    it returns 1, indicating that the URL is a domain name. If the number of dots is 4, 
+    it returns 0, indicating that the URL is an IP address. 
+    If the number of dots is greater than 4, it returns -1, indicating that the URL is not valid. """
+
     if having_ip_address(url) == -1:
         match = re.search(
             '(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.'
@@ -93,6 +100,8 @@ def domain_registration_length(domain):
 
 
 def favicon(wiki, soup, domain):
+    """Returns 1 if the head contains an href of the same domain or the href with single dot,
+    else -1 """
     for head in soup.find_all('head'):
         for head.link in soup.find_all('link', href=True):
             dots = [x.start() for x in re.finditer(r'\.', head.link['href'])]
@@ -304,8 +313,9 @@ def get_hostname_from_url(url):
 
 
 def extractFeature(url, html):
-    req = Request('https://www.metacritic.com/browse/movies/genre/date?page=0',
+    req = Request(url,
                   headers={'User-Agent': 'Mozilla/5.0'})
+
     html_page = urlopen(req).read()
     soup = BeautifulSoup(html_page, 'html.parser')
 
@@ -315,8 +325,11 @@ def extractFeature(url, html):
         domain = whois.query(hostname)
         print('Domain from whois', domain)
     except Exception as e:
-        #print("An error occurred while checking domain using whois", type(e).name)
+        # print("An error occurred while checking domain using whois", type(e).__name__)
         dns = -1
+
+    phishigFeatures = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -
+                       -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,]
 
     features = [
         ('Having IP address', having_ip_address(url)),
@@ -326,8 +339,8 @@ def extractFeature(url, html):
         ('Having double slash', double_slash_redirecting(url)),
         ('Having dash symbol(Prefix Suffix)', prefix_suffix(hostname)),
         ('Having multiple subdomains', having_sub_domain(url)),
-        #('SSL Final State', -1 if dns == -1 else ssl_final_state(url)),
-        #('SSL Final State', -1 if dns == -1 else 1),
+        # ('SSL Final State', -1 if dns == -1 else ssl_final_state(url)),
+        # ('SSL Final State', -1 if dns == -1 else 1),
         ('Domain Registration Length', -1 if dns == - \
          1 else domain_registration_length(domain)),
         ('Favicon', favicon(url, soup, hostname)),
@@ -342,8 +355,7 @@ def extractFeature(url, html):
         ('Age of Domain', -1 if dns == -1 else age_of_domain(domain)),
         ('DNS Record', dns),
         ('Web Traffic', web_traffic(soup)),
-        ('Google Index', -1),
-        #('Google Index', google_index(url)),
+        ('Google Index', google_index(url)),
         ('Statistical Reports', statistical_report(url, hostname))
     ]
 
@@ -352,4 +364,3 @@ def extractFeature(url, html):
     print(output)
 
     return [feature[1] for feature in features]
-0
