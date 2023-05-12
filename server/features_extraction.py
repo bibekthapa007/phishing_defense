@@ -9,7 +9,6 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 from googlesearch import search
 from urllib.request import Request, urlopen
-import whois
 
 from patterns import ipv4_pattern, ipv6_pattern, shortening_services, http_https
 
