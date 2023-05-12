@@ -9,7 +9,7 @@ MODEL_PATH = './models/random_forest.pkl'
 
 
 def predict(test_url, html):
-    features_test = features_extraction.extractFeature(test_url,html)
+    features_test = features_extraction.extractFeature(test_url, html)
     features_test_data = np.array(features_test).reshape((1, -1))
 
     # TODO: Add .pkl model file inside the models folder and replace model path
@@ -18,9 +18,8 @@ def predict(test_url, html):
 
     pred = clf.predict(features_test_data)
     print("---------------------------------")
-    print(test_url)
-    print(pred)
     prediction = int(pred[0])
+    print(prediction, "prediction")
     if prediction == 1:
         print("SAFE")
         return 1
