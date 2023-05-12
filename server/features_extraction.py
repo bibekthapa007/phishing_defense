@@ -6,6 +6,7 @@ import ipaddress
 from datetime import datetime
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
+import whois
 
 from patterns import ipv4_pattern, ipv6_pattern, shortening_services, http_https
 
@@ -312,7 +313,9 @@ def extractFeature(url, html):
     dns = 1
     try:
         domain = whois.query(hostname)
-    except:
+        print('Domain from whois', domain)
+    except Exception as e:
+        #print("An error occurred while checking domain using whois", type(e).name)
         dns = -1
 
     features = [
@@ -323,8 +326,8 @@ def extractFeature(url, html):
         ('Having double slash', double_slash_redirecting(url)),
         ('Having dash symbol(Prefix Suffix)', prefix_suffix(hostname)),
         ('Having multiple subdomains', having_sub_domain(url)),
-        # ('SSL Final State', -1 if dns == -1 else ssl_final_state(url)),
-        ('SSL Final State', -1 if dns == -1 else 1),
+        #('SSL Final State', -1 if dns == -1 else ssl_final_state(url)),
+        #('SSL Final State', -1 if dns == -1 else 1),
         ('Domain Registration Length', -1 if dns == - \
          1 else domain_registration_length(domain)),
         ('Favicon', favicon(url, soup, hostname)),
@@ -339,8 +342,8 @@ def extractFeature(url, html):
         ('Age of Domain', -1 if dns == -1 else age_of_domain(domain)),
         ('DNS Record', dns),
         ('Web Traffic', web_traffic(soup)),
-        ('Google Index', 1),
-        # ('Google Index', google_index(url)),
+        ('Google Index', -1),
+        #('Google Index', google_index(url)),
         ('Statistical Reports', statistical_report(url, hostname))
     ]
 
@@ -349,3 +352,4 @@ def extractFeature(url, html):
     print(output)
 
     return [feature[1] for feature in features]
+0

@@ -23,11 +23,11 @@ def check():
 
         features = extractFeature(url, html)
 
-        # isSafe = predict(url)
+        isSafe = predict(url, html)
 
         print(url, html)
 
-        return jsonify({"url": url, "isSafe": "true"}), 200
+        return jsonify({"url": url, "isSafe": isSafe}), 200
     else:
         return jsonify({'error': 'Invalid request method'}), 400
 
