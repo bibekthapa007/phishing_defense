@@ -1,5 +1,8 @@
 flask
 numpy
 joblib
-python-whois
+whois
 beautifulsoup4
+sklearn
+scikit-learn
+googlesearch-python
