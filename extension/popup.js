@@ -18,10 +18,14 @@ function transfer() {
     xhr.onload = () => {
       if (xhr.status === 200) {
         var response = JSON.parse(xhr.responseText);
-        if (response.isSafe === 1) {
-          $("#div1").text("SAFE");
+        if (response.isError == 1) {
+          $("#div2").text(response.error || "ERROR");
         } else {
-          $("#div2").text("UNSAFE");
+          if (response.isSafe === 1) {
+            $("#div1").text("SAFE");
+          } else {
+            $("#div2").text("UNSAFE");
+          }
         }
       } else {
         $("#div3").text("ERROR");
